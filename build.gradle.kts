@@ -24,6 +24,7 @@ extra["springAiVersion"] = "1.0.0-M3"
 extra["springModulithVersion"] = "1.2.4"
 
 dependencies {
+
     implementation("org.springframework.boot:spring-boot-starter-integration")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.ai:spring-ai-bedrock-ai-spring-boot-starter")
@@ -41,7 +42,8 @@ dependencies {
     implementation("com.github.librepdf:openpdf:2.0.3")
 // https://mvnrepository.com/artifact/org.jsoup/jsoup
     implementation("org.jsoup:jsoup:1.18.1")
-
+    implementation("org.apache.poi:poi-ooxml:5.4.0")
+    implementation("org.apache.commons:commons-csv:1.11.0")
 }
 
 dependencyManagement {
