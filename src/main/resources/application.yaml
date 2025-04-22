@@ -1,0 +1,15 @@
+spring:
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      embedding:
+        model: llama3.2
+      chat:
+        options:
+          model: llama3.2
+#          temperature: 0.5
+    vectorstore:
+      pgvector:
+        index-type: hnsw
+        distance-type: cosine_distance
+        dimensions: 1536
