@@ -2,6 +2,7 @@ package com.example.ai_test
 
 import com.lowagie.text.pdf.PdfWriter
 import org.jsoup.Jsoup
+import org.springframework.ai.chat.client.ChatClient
 import org.springframework.ai.chat.model.ChatModel
 import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.ai.chat.prompt.PromptTemplate
@@ -23,6 +24,9 @@ class RagController {
 
     @Autowired
     private lateinit var chatModel: ChatModel
+
+    @Autowired
+    private lateinit var chatClient: ChatClient
 
     @Autowired
     private lateinit var vectorStore: VectorStore
@@ -63,16 +67,16 @@ class RagController {
 
 //        first line of a file is a sheet name, the
 //        second line is a columns name of a sheet, and after that comes data.
-
+//                            You should respond with data in ASCII table structure formatting.
+//        Sheet name is stored in a tag '<SHEET_NAME>' also as EXCEL_FILE_NAME. Multiple Sheets may
+//        belong to one EXCEL file.
+//        On the next line stored column names separated by ';' and on the next lines sored data for
+//        the sheet separated by ';'. Every sheet of each file is separated by a tag <END_OF_SHEET>.
+//        Files might have different structure and contents.
         val systemPromptTemplate = SystemPromptTemplate(
             """
-                            You are a software which purpose is to compare excels files that are stored in CSV format.
-                            Sheet name is stored in a tag '<SHEET_NAME>' also as EXCEL_FILE_NAME. Multiple Sheets may 
-                            belong to one EXCEL file.                
-                            On the next line stored column names separated by ';' and on the next lines sored data for
-                             the sheet separated by ';'. Every sheet of each file is separated by a tag <END_OF_SHEET>.
-                            You should respond with data in ASCII table structure formatting.
-                            Do not use any other information. If you do not know the answer, only answer exactly: UNKNOWN.
+                            Your urpose is to ONLY compare EXCEL files that are stored in CSV format.
+                            Do not use any other information. If you do not know the answer, ONLY answer exactly: UNKNOWN.
                             Use ONLY the following information to find a difference:
                             {information}
                         """.trimIndent()
@@ -81,6 +85,9 @@ class RagController {
         var userPromptTemplate = PromptTemplate("{query}");
         var userMessage = userPromptTemplate.createMessage(mapOf("query" to query));
         var prompt = Prompt(listOf(systemMessage, userMessage));
+
+
+
 
         return ResponseEntity.ok(chatModel.call(prompt).getResult().output.content)
     }

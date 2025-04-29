@@ -9,3 +9,5 @@ C
 settings.gradle.kts,7/4/749edfcc96398253e5b3416184e95c46621da850
 d
 4src/main/kotlin/com/example/ai_test/RagController.kt,3/1/31ab8e1660d8e99f4f395454d0cf8c257055fcd5
+a
+1src/main/kotlin/com/example/ai_test/DataBucket.kt,6/3/63345194317ef7f83fcbeb10c5816a640b6e8bac
